@@ -34,7 +34,8 @@ class PostingsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             }
             
             self.postings = records!
-            
+        
+            // Perform any UI operations on the main queue
             dispatch_async(dispatch_get_main_queue(), { 
                 self.tableView.reloadData()
             })
@@ -53,6 +54,9 @@ class PostingsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier("Posting", forIndexPath: indexPath) as! PostingCell
         
         let posting = self.postings[indexPath.row]
+        
+        // CKRecord are like dictionaries and follow same syntax.
+        // The compiler doesn't know the types of the values, so you must cast them appropriately.
         cell.nameLabel.text = posting["name"] as? String
         cell.urlLabel.text = posting["url"] as? String
         
